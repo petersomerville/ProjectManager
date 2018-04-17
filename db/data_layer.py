@@ -11,14 +11,14 @@ def get_project(project_id):
 def get_all_projects():
     return db.open().query(Project).all()
 
-def create_project(name):
+def create_project(title):
     project = Project()
-    project.name = name
+    project.title = title
     return db.save(project)
 
-def update_project(project_id, name):
+def update_project(project_id, title):
     project = get_project(project_id)
-    project.name = name
+    project.title = title
     return db.update(project)
 
 def delete_project(project_id):

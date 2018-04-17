@@ -8,8 +8,30 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    db_projects = get_all_projects()
+    return render_template('index.html', projects = db_projects)
 
+@app.route('/add_project', methods=['POST'])
+def add_project():
+    title = request.form['html_title']
+    create_project(title)
+    return redirect(url_for('index'))
 
+@app.route('/edit_project/<project_id>')
+def edit_project(project_id):
+    db_project = get_project(project_id)
+    return render_template('edit_proj.html', project = db_project)
+
+@app.route('/update_project', methods=['POST'])
+def update_project_request():
+    project_id = request.form['html_id']
+    title = request.form['html_title']
+    update_project(project_id, title)
+    return redirect(url_for('index'))
+
+@app.route('/delete_project/<project_id>')
+def delete_project_request(project_id):
+    delete_project(project_id)
+    return redirect(url_for('index'))
 
 app.run(debug=True)

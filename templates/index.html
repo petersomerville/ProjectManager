@@ -1,5 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
 
-{% block body %}
-<h1>Hello World</h1>
+<h1 class="mt-3">
+    <a href="{{url_for('index')}}">ProjectTracker</a>
+</h1>
+
+<form action="{{url_for('add_project')}}" method="POST">
+    <div class="form-group row p-3 justify-content-center">
+        <input type="text" class="col-8 mr-2" name="html_title" placeholder="Title of your new project">
+        <button class="btn btn-success">Create</button>
+    </div>
+</form>
+<hr>
+<div class="col-12">
+    <div class="row align-middle">
+        <div class="col-6">Project Title</div>
+        <div class="col-3">Date Created</div>
+    </div>
+    <hr> 
+    {% for project in projects %}
+    <div class="row align-middle">
+        <button class="btn btn-primary">Tasks</button>
+        <div class="col-6 align-middle">{{project.title}}</div>
+        <div class="col-3 align-middle">{{project.created_at}}</div>
+        <a href="{{url_for('edit_project', project_id=project.id)}}" class="btn mr-1 btn-warning">Edit</a>
+        <a href="{{url_for('delete_project_request', project_id=project.id)}}" class="btn btn-danger">Delete</a>
+    </div>
+    <hr> 
+    {% endfor %}
+</div>
 {% endblock %}
