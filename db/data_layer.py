@@ -40,7 +40,7 @@ def get_all_tasks(project_id):
     return db.open().query(Task).filter(Task.project_id == project_id).all()
 
 def update_task(task_id, description):
-    task = get_task(task_id)
+    task.id = get_task(task_id)
     task.description = description
     return db.update(task)
 

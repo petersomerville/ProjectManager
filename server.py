@@ -34,4 +34,17 @@ def delete_project_request(project_id):
     delete_project(project_id)
     return redirect(url_for('index'))
 
+@app.route('/list_tasks/<project_id>')
+def list_tasks(project_id):
+    db_tasklist = get_all_tasks(project_id)
+    db_project = get_project(project_id)
+    return render_template('list_tasks.html', tasklist = db_tasklist, project = db_project)
+
+
+@app.route('/add_task', methods=['POST'])
+def add_task():
+    description = request.form['html_description']
+    create_task(project_id, description)
+    return render_template('list_tasks.html')
+
 app.run(debug=True)
